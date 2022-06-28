@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:foodfair/exceptions/progress_bar.dart';
+import 'package:foodfair/widgets/progress_bar.dart';
 import 'package:foodfair/providers/address.dart';
 import 'package:foodfair/widgets/address_widget.dart';
 import 'package:foodfair/widgets/simple_appbar.dart';
 import 'package:provider/provider.dart';
-import '../Screens/save_address_screen.dart';
 import '../global/global_instance_or_variable.dart';
 import '../models/address.dart';
 import '../providers/total_amount.dart';
+import 'save_address_screen.dart';
 
 class AddressScreen extends StatefulWidget {
   static final String path = "/AddressScreen";

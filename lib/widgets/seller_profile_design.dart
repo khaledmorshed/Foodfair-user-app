@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:foodfair/Screens/user_menus_screen.dart';
+import 'package:foodfair/screens/user_menus_screen.dart';
 import 'package:foodfair/models/sellers_model.dart';
-import 'package:foodfair/presentation/color_manager.dart';
 
+import '../global/color_manager.dart';
 import 'loading_container.dart';
 
 class SellerProfileDesign extends StatefulWidget {

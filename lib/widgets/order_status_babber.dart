@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:foodfair/Screens/user_home_screen.dart';
+import 'package:foodfair/screens/user_home_screen.dart';
 import 'package:foodfair/widgets/container_decoration.dart';
 
 class OrderStatusBanner extends StatelessWidget {

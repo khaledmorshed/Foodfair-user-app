@@ -1,11 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
-import 'package:foodfair/Screens/user_items_details_screen.dart';
-
+import '../global/color_manager.dart';
 import '../models/items.dart';
-import '../models/menus.dart';
-import '../presentation/color_manager.dart';
+import '../screens/user_items_details_screen.dart';
 import 'loading_container.dart';
 
 class ItemsWidget extends StatefulWidget {

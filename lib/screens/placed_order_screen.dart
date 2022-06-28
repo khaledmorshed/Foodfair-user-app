@@ -1,18 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-
-import 'package:foodfair/Screens/user_home_screen.dart';
-import 'package:foodfair/global/global_instance_or_variable.dart';
 import 'package:foodfair/providers/order.dart';
-import 'package:foodfair/providers/seller.dart';
 import 'package:foodfair/widgets/container_decoration.dart';
-import 'package:foodfair/widgets/seller_profile_design.dart';
 
-import '../global/add_item_to_cart.dart';
-import '../presentation/color_manager.dart';
-import '../providers/total_amount.dart';
+import '../global/color_manager.dart';
+
 
 class PlacedOrderScreen extends StatefulWidget {
   //static final String path = "/PlacedOrderScreen";
@@ -133,7 +125,6 @@ class _PlacedOrderScreenState extends State<PlacedOrderScreen> {
                 ),
               ),
               onPressed: () async {
-                print("1 OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                 // Consumer<OrderProvider>(
                 //   builder: (context, addorder, ch) {
                 //     return addorder.addOrderDetails(addressID, context);

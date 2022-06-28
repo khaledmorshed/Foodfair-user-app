@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodfair/screens/my_order_screen.dart';
+import 'package:foodfair/screens/user_home_screen.dart';
 import 'package:foodfair/global/global_instance_or_variable.dart';
-import 'package:foodfair/presentation/color_manager.dart';
 
-import '../Screens/auth_screen.dart';
-
+import '../global/color_manager.dart';
+import '../screens/auth_screen.dart';
 
 class MyDrawer extends StatelessWidget {
   //const MyDrawer({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class MyDrawer extends StatelessWidget {
                     // width: 160,
                     child: CircleAvatar(
                       backgroundImage:
-                          NetworkImage("${sPref!.getString("photoUrl")}"),
+                      NetworkImage("${sPref!.getString("photoUrl")}"),
                     ),
                   ),
                 ),
@@ -63,9 +64,10 @@ class MyDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.black),
             ),
             onTap: () {
-              firebaseAuth.signOut();
-              //Navigator.push(context,
-              //   MaterialPageRoute(builder: (context) => const AuthScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const UserHomeScreen()));
             },
           ),
           const Divider(thickness: 1),
@@ -76,7 +78,10 @@ class MyDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.black),
             ),
             onTap: () {
-              firebaseAuth.signOut();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>  MyOrderSceen()));
             },
           ),
           const Divider(thickness: 1),
@@ -86,8 +91,7 @@ class MyDrawer extends StatelessWidget {
               'History',
               style: TextStyle(color: Colors.black),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           const Divider(thickness: 1),
           ListTile(
@@ -96,8 +100,7 @@ class MyDrawer extends StatelessWidget {
               'Search',
               style: TextStyle(color: Colors.black),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           const Divider(thickness: 1),
           ListTile(
@@ -106,8 +109,7 @@ class MyDrawer extends StatelessWidget {
               'Add new address',
               style: TextStyle(color: Colors.black),
             ),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           const Divider(thickness: 1),
           ListTile(

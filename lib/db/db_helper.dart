@@ -1,13 +1,12 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DbHelper{
+  //fetch all sellers
   static Future<Stream<QuerySnapshot<Map<String, dynamic>>>>? fetchAllSellers()async{
-     Stream<QuerySnapshot<Map<String, dynamic>>>? query;
+     Stream<QuerySnapshot<Map<String, dynamic>>>? queryData;
     try{
-       query = FirebaseFirestore.instance.collection("sellers").snapshots();
-      return query;
+       queryData = FirebaseFirestore.instance.collection("sellers").snapshots();
+      return queryData;
     }catch(error){
       throw "error";
     }

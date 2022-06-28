@@ -1,15 +1,10 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:foodfair/map/map.dart';
-
 import 'package:foodfair/models/address.dart';
 import 'package:foodfair/providers/address.dart';
 import 'package:provider/provider.dart';
-
-import '../Screens/placed_order_screen.dart';
-import '../presentation/color_manager.dart';
-import '../providers/seller.dart';
-import '../providers/total_amount.dart';
+import '../global/color_manager.dart';
+import '../global/map.dart';
+import '../screens/placed_order_screen.dart';
 
 class AddressWidget extends StatefulWidget {
   final Address? addressModel;

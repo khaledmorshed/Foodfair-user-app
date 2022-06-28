@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfair/providers/seller.dart';
 import 'package:foodfair/providers/total_amount.dart';
 import 'package:provider/provider.dart';
-import '../Screens/user_home_screen.dart';
+import '../screens/user_home_screen.dart';
 import '../global/add_item_to_cart.dart';
 import '../global/global_instance_or_variable.dart';
 
@@ -13,7 +13,6 @@ String? orderId;
  DateTime? timestamp;
 class OrderProvider with ChangeNotifier {
   addOrderDetails(String? addressID, BuildContext context,/* String? sellerUid,*/ double? tAmount) async {
-    print(" 2 OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
      timestamp = DateTime.now();
     orderId = DateTime.now().millisecondsSinceEpoch.toString();
     // double? tAmount =

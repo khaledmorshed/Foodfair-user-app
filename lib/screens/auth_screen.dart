@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:foodfair/Screens/user_home_screen.dart';
-import '../../exceptions/error_dialog.dart';
-import '../../exceptions/loading_dialog.dart';
+import '../../widgets/error_dialog.dart';
+import '../../widgets/loading_dialog.dart';
 import '../../global/global_instance_or_variable.dart';
-import '../../presentation/color_manager.dart';
 import '../../widgets/container_decoration.dart';
+import '../global/color_manager.dart';
 import 'registration_screen.dart';
+import 'user_home_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);

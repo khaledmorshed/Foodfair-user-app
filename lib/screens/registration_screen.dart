@@ -6,10 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../exceptions/error_dialog.dart';
-import '../exceptions/loading_dialog.dart';
+import '../widgets/error_dialog.dart';
+import '../widgets/loading_dialog.dart';
+import '../global/color_manager.dart';
 import '../global/global_instance_or_variable.dart';
-import '../presentation/color_manager.dart';
 import '../widgets/container_decoration.dart';
 import 'user_home_screen.dart';
 
@@ -76,8 +76,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Future uploadProfileImage() async {
     String? imagePathToString = imagePath.toString();
     var _splitImagePath = imagePathToString.split("/")[6];
-    print(
-        "1 LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL ${_splitImagePath}");
     UploadTask? uploadTask;
     try {
       Reference reference =

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../presentation/color_manager.dart';
+import '../global/color_manager.dart';
 
 class ContainerDecoration extends StatelessWidget {
   const ContainerDecoration({Key? key}) : super(key: key);
@@ -19,11 +19,6 @@ class ContainerDecoration extends StatelessWidget {
     return BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            // Colors.green,
-            // Colors.cyan,
-            // ColorManager.orange2,
-            // ColorManager.green2,
-
             ColorManager.purple2,
             ColorManager.cyan2,
           ],

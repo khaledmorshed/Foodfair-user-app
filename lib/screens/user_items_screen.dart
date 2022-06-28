@@ -1,57 +1,54 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../exceptions/error_dialog.dart';
+import 'package:foodfair/models/items.dart';
+import 'package:foodfair/models/menus.dart';
+import 'package:foodfair/widgets/items_widget.dart';
+
+import '../widgets/error_dialog.dart';
 import '../global/global_instance_or_variable.dart';
-import '../models/menus.dart';
-import '../models/sellers_model.dart';
 import '../widgets/container_decoration.dart';
 import '../widgets/loading_container.dart';
-import '../widgets/menus_widget.dart';
+import '../widgets/my_appbar.dart';
 import '../widgets/my_drawer.dart';
 import '../widgets/text_widget_header.dart';
 
-class UserMenusScreen extends StatefulWidget {
-  final Sellers? sellerModel;
-
-  const UserMenusScreen({
+class UserItemsScreen extends StatefulWidget {
+  final Menus? model;
+  String? sellerUID;
+ UserItemsScreen({
     Key? key,
-    this.sellerModel,
+    this.model,
+    this.sellerUID,
   }) : super(key: key);
 
   @override
-  State<UserMenusScreen> createState() => _UserMenusScreenState();
+  State<UserItemsScreen> createState() => _UserItemsScreenState();
 }
 
-class _UserMenusScreenState extends State<UserMenusScreen> {
+class _UserItemsScreenState extends State<UserItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("foods"),
-        centerTitle: true,
-        //automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          decoration: const ContainerDecoration().decoaration(),
-        ),
-      ),
-      //drawer: MyDrawer(),
+      appBar: MyAppBar(/*sellerUID: widget.model!.sellerUID*/),
+      // drawer: MyDrawer(),
       body: CustomScrollView(
         slivers: [
           SliverPersistentHeader(
-            //pinned: true,
-            delegate: TextWidgetHeader(
-                title: widget.sellerModel!.sellerName! + "'s menus"),
+            // pinned: true,
+            delegate:
+                TextWidgetHeader(title: widget.model!.menuTitle! + "'s items"),
           ),
           StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("sellers")
-                .doc(widget.sellerModel!.sellerUID)
+                .doc(widget.model!.sellerUID)
                 .collection("menus")
+                .doc(widget.model!.menuID)
+                .collection("items")
                 .orderBy("publishedDate", descending: true)
                 .snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot?> snapshot) {
-              sellerUIDD = widget.sellerModel!.sellerUID;
               if (snapshot.hasError) {
                 ErrorDialog(
                   message: "${snapshot.error}",
@@ -71,14 +68,13 @@ class _UserMenusScreenState extends State<UserMenusScreen> {
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          print("101 + + ${snapshot.data!.docs[index]} + AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
-                          Menus menuModel = Menus.fromJson(
+                          Items itemModel = Items.fromJson(
                               snapshot.data!.docs[index].data()
                                   as Map<String, dynamic>);
-                          return MenusWidget(
-                            model: menuModel,
+                          return ItemsWidget(
+                            itemModel: itemModel,
                             context: context,
-                            sellerUID: widget.sellerModel!.sellerUID,
+                            sellerUID: widget.sellerUID
                             //netValue: model.isOnline,
                           );
                         },

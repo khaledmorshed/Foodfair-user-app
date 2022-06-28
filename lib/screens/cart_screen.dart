@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:foodfair/Screens/address_screen.dart';
-import 'package:foodfair/exceptions/progress_bar.dart';
+import 'package:foodfair/widgets/progress_bar.dart';
 import 'package:foodfair/models/items.dart';
-import 'package:foodfair/presentation/color_manager.dart';
 import 'package:foodfair/providers/total_amount.dart';
 import 'package:foodfair/widgets/cart_widget.dart';
 import 'package:foodfair/widgets/my_appbar.dart';
@@ -14,8 +12,10 @@ import 'package:foodfair/widgets/text_widget_header.dart';
 import 'package:provider/provider.dart';
 
 import '../global/add_item_to_cart.dart';
+import '../global/color_manager.dart';
 import '../providers/cart_item_quantity.dart';
 import '../widgets/container_decoration.dart';
+import 'address_screen.dart';
 
 class CartScreen extends StatefulWidget {
   /*final String? sellerUID;
