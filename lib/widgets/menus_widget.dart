@@ -65,7 +65,7 @@ class _MenusWidgetState extends State<MenusWidget> {
                           ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Center(
-                          child: /*CircularProgressIndicator*/ LoadingContainer(
+                          child: LoadingContainer(
                             value: loadingProgress.expectedTotalBytes != null
                                 ? loadingProgress.cumulativeBytesLoaded /
                                     loadingProgress.expectedTotalBytes!

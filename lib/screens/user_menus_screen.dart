@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../global/global_instance_or_variable.dart';
 import '../models/menus.dart';
 import '../models/sellers_model.dart';
+import '../providers/sellers_provider.dart';
 import '../widgets/container_decoration.dart';
 import '../widgets/error_dialog.dart';
 import '../widgets/loading_container.dart';
@@ -22,6 +24,21 @@ class UserMenusScreen extends StatefulWidget {
 }
 
 class _UserMenusScreenState extends State<UserMenusScreen> {
+  late SellersProvider _sellersProvider;
+  bool _init = true;
+
+  @override
+  void didChangeDependencies() {
+    if(_init){
+      _sellersProvider = Provider.of<SellersProvider>(context, listen: false);
+      _sellersProvider.fetchSpecificSellerMenus(widget.sellerModel!.sellerUID!).then((value) {
+        setState((){
+          _init = false;
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,12 +59,7 @@ class _UserMenusScreenState extends State<UserMenusScreen> {
                 title: widget.sellerModel!.sellerName! + "'s menus"),
           ),
           StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("sellers")
-                .doc(widget.sellerModel!.sellerUID)
-                .collection("menus")
-                .orderBy("publishedDate", descending: true)
-                .snapshots(),
+            stream: _sellersProvider.specificSellerMenus,
             builder: (context, AsyncSnapshot<QuerySnapshot?> snapshot) {
               sellerUIDD = widget.sellerModel!.sellerUID;
               if (snapshot.hasError) {
@@ -69,7 +81,6 @@ class _UserMenusScreenState extends State<UserMenusScreen> {
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          print("101 + + ${snapshot.data!.docs[index]} + AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
                           Menus menuModel = Menus.fromJson(
                               snapshot.data!.docs[index].data()
                                   as Map<String, dynamic>);

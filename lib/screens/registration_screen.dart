@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../widgets/error_dialog.dart';
 import '../widgets/loading_dialog.dart';
 import '../global/color_manager.dart';
@@ -212,186 +211,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      InkWell(
-                        onTap: () {},
-                        child: CircleAvatar(
-                            radius: MediaQuery.of(context).size.width * 0.20,
-                            backgroundColor: Colors.white,
-                            backgroundImage: imageXFile == null
-                                ? null
-                                : FileImage(File(imageXFile!.path)),
-                            child: PopupMenuButton(
-                              onSelected: (selectedValue) {
-                                if (selectedValue == FilterOption.Camera) {
-                                  setState(() {
-                                    pickedImageFromCamera();
-                                  });
-                                } else {
-                                  setState(() {
-                                    pickedImageFromGallery();
-                                  });
-                                }
-                              },
-                              //icon: Icon(Icons.person),
-                              child: imageXFile == null
-                                  ? Icon(
-                                      Icons.add_photo_alternate,
-                                      size: MediaQuery.of(context).size.width *
-                                          0.30,
-                                    )
-                                  : Visibility(
-                                      visible: false,
-                                      maintainSize: true,
-                                      maintainAnimation: true,
-                                      maintainState: true,
-                                      child: Icon(
-                                        Icons.add_photo_alternate,
-                                        size:
-                                            MediaQuery.of(context).size.width *
-                                                0.40,
-                                      ),
-                                    ),
-                              itemBuilder: (value) => [
-                                const PopupMenuItem(
-                                  child: Text("Camera"),
-                                  value: FilterOption.Camera,
-                                ),
-                                const PopupMenuItem(
-                                  child: Text("Gellery"),
-                                  value: FilterOption.Gallery,
-                                )
-                              ],
-                            )),
-                      ),
+                      inkWellMethod(),
                       const SizedBox(
                         height: 15,
                       ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: nameController,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 2, vertical: 2),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                    borderSide: BorderSide.none),
-                                prefixIcon: Icon(
-                                  Icons.person,
-                                  color: Colors.cyan,
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: "Name",
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please enter a name";
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            TextFormField(
-                              controller: emailController,
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 2, vertical: 2),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                    borderSide: BorderSide.none),
-                                prefixIcon: Icon(
-                                  Icons.email,
-                                  color: Colors.cyan,
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: "email",
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "please enter an email";
-                                } else if (!value.contains('@')) {
-                                  return "Invalid email";
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            TextFormField(
-                              obscureText: true,
-                              controller: passwordController,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 2, vertical: 2),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                    borderSide: BorderSide.none),
-                                prefixIcon: Icon(
-                                  Icons.lock,
-                                  color: Colors.cyan,
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: "password",
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "please enter password";
-                                } else if (value.length < 6) {
-                                  return "password must be at least 6 characters";
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            TextFormField(
-                              obscureText: true,
-                              controller: confirmPasswordController,
-                              decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 2, vertical: 2),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                    borderSide: BorderSide.none),
-                                prefixIcon: Icon(
-                                  Icons.lock,
-                                  color: Colors.cyan,
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintText: "confirm password",
-                              ),
-                              validator: (value) {
-                                if (value != passwordController.text) {
-                                  return "passwords do not match";
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                          ],
-                        ),
-                      ),
+                      formMethod(),
                       const SizedBox(
                         height: 20,
                       ),
@@ -424,6 +248,189 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
             ),
+    );
+  }
+
+  formMethod() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 2, vertical: 2),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  borderSide: BorderSide.none),
+              prefixIcon: Icon(
+                Icons.person,
+                color: Colors.cyan,
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: "Name",
+            ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Please enter a name";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          TextFormField(
+            controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 2, vertical: 2),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  borderSide: BorderSide.none),
+              prefixIcon: Icon(
+                Icons.email,
+                color: Colors.cyan,
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: "email",
+            ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "please enter an email";
+              } else if (!value.contains('@')) {
+                return "Invalid email";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          TextFormField(
+            obscureText: true,
+            controller: passwordController,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 2, vertical: 2),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  borderSide: BorderSide.none),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.cyan,
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: "password",
+            ),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "please enter password";
+              } else if (value.length < 6) {
+                return "password must be at least 6 characters";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          TextFormField(
+            obscureText: true,
+            controller: confirmPasswordController,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 2, vertical: 2),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  borderSide: BorderSide.none),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.cyan,
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              hintText: "confirm password",
+            ),
+            validator: (value) {
+              if (value != passwordController.text) {
+                return "passwords do not match";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
+    );
+  }
+
+  inkWellMethod() {
+    return InkWell(
+      onTap: () {},
+      child: CircleAvatar(
+          radius: MediaQuery.of(context).size.width * 0.20,
+          backgroundColor: Colors.white,
+          backgroundImage: imageXFile == null
+              ? null
+              : FileImage(File(imageXFile!.path)),
+          child: PopupMenuButton(
+            onSelected: (selectedValue) {
+              if (selectedValue == FilterOption.Camera) {
+                setState(() {
+                  pickedImageFromCamera();
+                });
+              } else {
+                setState(() {
+                  pickedImageFromGallery();
+                });
+              }
+            },
+            //icon: Icon(Icons.person),
+            child: imageXFile == null
+                ? Icon(
+              Icons.add_photo_alternate,
+              size: MediaQuery.of(context).size.width *
+                  0.30,
+            )
+                : Visibility(
+              visible: false,
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              child: Icon(
+                Icons.add_photo_alternate,
+                size:
+                MediaQuery.of(context).size.width *
+                    0.40,
+              ),
+            ),
+            itemBuilder: (value) => [
+              const PopupMenuItem(
+                child: Text("Camera"),
+                value: FilterOption.Camera,
+              ),
+              const PopupMenuItem(
+                child: Text("Gellery"),
+                value: FilterOption.Gallery,
+              )
+            ],
+          )),
     );
   }
 }

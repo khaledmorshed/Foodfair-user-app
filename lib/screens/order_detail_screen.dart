@@ -89,8 +89,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           thickness: 4,
                         ),
                         orderStatus == "ended"
-                            ? Image.asset("assets/images/delivered.jp")
-                            : Image.asset("assets/images/state.jpg"),
+                            ? Image.asset("assets/images/delivered.jpg")
+                            : Image.asset("assets/images/state.png"),
                         const Divider(
                           thickness: 4,
                         ),

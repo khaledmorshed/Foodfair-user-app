@@ -26,50 +26,14 @@ class _UserItemsDetailsScreenState extends State<UserItemsDetailsScreen> {
   int itemCounter = 1;
   @override
   Widget build(BuildContext context) {
-    print(
-        "mutton burger itemId = ${widget.itemModel!.itemID} + (1650134716838673) VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV ()");
     return Scaffold(
       appBar: MyAppBar(/*sellerUID: widget.itemModel!.sellerUID*/),
-      /*AppBar(
-        title: Text(widget.itemModel!.itemTitle.toString()),
-        actions: [
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  // add to cart
-                },
-                icon: const Icon(Icons.shopping_cart),
-              ),
-              const Positioned(
-                top: 3,
-                right: 10,
-                child: Center(
-                    child: Text(
-                  "0",
-                  style: TextStyle(color: Colors.white, fontSize: 13),
-                )),
-              )
-            ],
-          ),
-        ],
-      ),*/
       body: ListView(
         children: [
-          //Image.network(widget.itemModel!.itemImageUrl.toString()),
-          // NumberInputPrefabbed.roundedButtons(
-          //   controller: counterTextEditingController,
-          //   buttonArrangement: ButtonArrangement.incRightDecLeft,
-          //   incIcon: Icons.add,
-          //   scaleWidth: 0.75,
-          // ),
           CachedNetworkImage(
             imageUrl: widget.itemModel!.itemImageUrl.toString(),
             placeholder: (context, url) => Center(child: LoadingContainer()),
             errorWidget: (context, url, error) => Icon(Icons.error),
-            // height: MediaQuery.of(context).size.height * 0.3,
-            //width: MediaQuery.of(context).size.width,
-            //fit: BoxFit.fill,
           ),
           Container(
             margin: EdgeInsets.all(15),
@@ -132,8 +96,6 @@ class _UserItemsDetailsScreenState extends State<UserItemsDetailsScreen> {
               onPressed: () {
                 List<String> separatedItemsIDList =
                     separateItemsIdFromUserCartList();
-                // print(
-                //    " 0 separatedItemsIDList = $separatedItemsIDList + CCCCCCCCCCCCCCCCCCCCCCCCCCc");
                 separatedItemsIDList.contains(widget.itemModel!.itemID)
                     ? Fluttertoast.showToast(msg: "Item is already in cart")
                     : addItemToCart(

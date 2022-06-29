@@ -21,7 +21,7 @@ class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SimpleAppbar(),
+      appBar: SimpleAppbar(title: "foodfair",),
       floatingActionButton: SizedBox(
         height: MediaQuery.of(context).size.height * 0.06,
         width: MediaQuery.of(context).size.width * 0.50,

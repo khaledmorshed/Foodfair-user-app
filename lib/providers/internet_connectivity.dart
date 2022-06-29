@@ -17,7 +17,7 @@ class InternetConnectivityProvider with ChangeNotifier {
       ConnectivityResult result,
     ) async {
       if (result == ConnectivityResult.none) {
-       
+
         _isOnline = false;
         notifyListeners();
       } else {
@@ -34,16 +34,16 @@ class InternetConnectivityProvider with ChangeNotifier {
       var status = await _connectivity.checkConnectivity();
 
       if (status == ConnectivityResult.none) {
-       
+
         _isOnline = false;
         notifyListeners();
       } else {
         _isOnline = true;
-       
+
         notifyListeners();
       }
     } on PlatformException catch (e) {
-     
+
       print("PlatformException: " + e.toString());
     }
   }
@@ -55,11 +55,11 @@ class InternetConnectivityProvider with ChangeNotifier {
           await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isConnected = true;
-        
+
       }
     } on SocketException catch (_) {
       isConnected = false;
-     
+
       //return false;
     }
     return isConnected!;

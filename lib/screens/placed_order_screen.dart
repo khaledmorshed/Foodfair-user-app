@@ -101,47 +101,49 @@ class _PlacedOrderScreenState extends State<PlacedOrderScreen> {
     // sellerUid = Provider.of<SellerProvider>(context, listen: false).sellerUID;
     // tAmount =
     //     Provider.of<TotalAmountProvider>(context, listen: false).totalAmount;
-    return Scaffold(
-      body: Container(
-        decoration: ContainerDecoration().decoaration(),
-        child: Column(
-          children: [
-            Image.asset("assets/images/delivery.jpg"),
-            ElevatedButton(
-              child: const Text(
-                "Confirm",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+    return SafeArea(
+      child: Scaffold(
+          body: Container(
+            decoration: ContainerDecoration().decoaration(),
+            child: Column(
+              children: [
+                Image.asset("assets/images/delivery.png"),
+                ElevatedButton(
+                  child: const Text(
+                    "Confirm",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.purple[300],
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: ColorManager.depOrange1),
+                    ),
+                  ),
+                  onPressed: () async {
+                    // Consumer<OrderProvider>(
+                    //   builder: (context, addorder, ch) {
+                    //     return addorder.addOrderDetails(addressID, context);
+                    //   },
+                    // );
+                    // String sellerUid = Provider.of<SellerProvider>(context, listen: false)
+                    //     .sellerUID;
+                    // tAmount =
+                    //     Provider.of<TotalAmountProvider>(context, listen: false)
+                    //         .totalAmount;
+                    await Provider.of<OrderProvider>(context, listen: false)
+                        .addOrderDetails(widget.addressID, context, widget.tAmount);
+                  },
                 ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.purple[300],
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(color: ColorManager.depOrange1),
-                ),
-              ),
-              onPressed: () async {
-                // Consumer<OrderProvider>(
-                //   builder: (context, addorder, ch) {
-                //     return addorder.addOrderDetails(addressID, context);
-                //   },
-                // );
-                // String sellerUid = Provider.of<SellerProvider>(context, listen: false)
-                //     .sellerUID;
-                // tAmount =
-                //     Provider.of<TotalAmountProvider>(context, listen: false)
-                //         .totalAmount;
-                await Provider.of<OrderProvider>(context, listen: false)
-                    .addOrderDetails(widget.addressID, context, widget.tAmount);
-              },
+              ],
             ),
-          ],
+          ),
         ),
-      ),
     );
   }
 }

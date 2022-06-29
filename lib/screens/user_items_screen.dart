@@ -1,22 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:foodfair/models/items.dart';
 import 'package:foodfair/models/menus.dart';
 import 'package:foodfair/widgets/items_widget.dart';
-
+import 'package:provider/provider.dart';
+import '../providers/sellers_provider.dart';
 import '../widgets/error_dialog.dart';
-import '../global/global_instance_or_variable.dart';
-import '../widgets/container_decoration.dart';
 import '../widgets/loading_container.dart';
 import '../widgets/my_appbar.dart';
-import '../widgets/my_drawer.dart';
 import '../widgets/text_widget_header.dart';
 
 class UserItemsScreen extends StatefulWidget {
   final Menus? model;
   String? sellerUID;
- UserItemsScreen({
+
+  UserItemsScreen({
     Key? key,
     this.model,
     this.sellerUID,
@@ -27,6 +25,23 @@ class UserItemsScreen extends StatefulWidget {
 }
 
 class _UserItemsScreenState extends State<UserItemsScreen> {
+  late SellersProvider _sellersProvider;
+  bool _init = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_init) {
+      _sellersProvider = Provider.of<SellersProvider>(context, listen: false);
+      _sellersProvider
+          .fetchSpecificSellerItems(widget.sellerUID!, widget.model!.menuID!)
+          .then((value) {
+        setState(() {
+          _init = false;
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,14 +55,7 @@ class _UserItemsScreenState extends State<UserItemsScreen> {
                 TextWidgetHeader(title: widget.model!.menuTitle! + "'s items"),
           ),
           StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("sellers")
-                .doc(widget.model!.sellerUID)
-                .collection("menus")
-                .doc(widget.model!.menuID)
-                .collection("items")
-                .orderBy("publishedDate", descending: true)
-                .snapshots(),
+            stream: _sellersProvider.specificSellerItems,
             builder: (context, AsyncSnapshot<QuerySnapshot?> snapshot) {
               if (snapshot.hasError) {
                 ErrorDialog(
@@ -72,11 +80,11 @@ class _UserItemsScreenState extends State<UserItemsScreen> {
                               snapshot.data!.docs[index].data()
                                   as Map<String, dynamic>);
                           return ItemsWidget(
-                            itemModel: itemModel,
-                            context: context,
-                            sellerUID: widget.sellerUID
-                            //netValue: model.isOnline,
-                          );
+                              itemModel: itemModel,
+                              context: context,
+                              sellerUID: widget.sellerUID
+                              //netValue: model.isOnline,
+                              );
                         },
                         childCount: snapshot.data!.docs.length,
                       ),

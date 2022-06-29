@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:foodfair/models/items.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -8,6 +7,7 @@ class CartWidget extends StatefulWidget {
   final BuildContext? context;
   final int? quantityNumber;
   final double? total;
+
   const CartWidget({
     Key? key,
     this.itemModel,
@@ -24,8 +24,6 @@ class _CartWidgetState extends State<CartWidget> {
   // double? price = widget.itemModel!.price;
   @override
   Widget build(BuildContext context) {
-    print(
-        " 3 total = ${widget.total} + AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
       child: InkWell(
@@ -52,14 +50,7 @@ class _CartWidgetState extends State<CartWidget> {
                 //color: Colors.blue,
                 height: MediaQuery.of(context).size.height * 0.14,
                 width: MediaQuery.of(context).size.height * 0.16,
-                child: /*Image.network(
-                  widget.itemModel!.itemImageUrl!,
-                  //width: 120,
-                  //height: 120,
-                  //scale: 8,
-                  fit: BoxFit.fill,
-                ),*/
-                    CachedNetworkImage(
+                child: CachedNetworkImage(
                   imageUrl: widget.itemModel!.itemImageUrl!,
                   placeholder: (context, url) =>
                       Center(child: CircularProgressIndicator()),
@@ -93,18 +84,6 @@ class _CartWidgetState extends State<CartWidget> {
                       const SizedBox(
                         height: 1,
                       ),
-                      // Row(
-                      //   children: [
-                      //     const Text(
-                      //       "x ",
-                      //       style: TextStyle(fontSize: 16, color: Colors.black),
-                      //     ),
-                      //     Text(
-                      //       widget.quantityNumber.toString(),
-                      //       style: TextStyle(fontSize: 16, color: Colors.black),
-                      //     ),
-                      //   ],
-                      // ),
                       Padding(
                         padding: const EdgeInsets.only(left: 3, bottom: 5),
                         child: Row(
