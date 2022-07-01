@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:foodfair/widgets/progress_bar.dart';
 import 'package:foodfair/global/global_instance_or_variable.dart';
 import 'package:foodfair/models/address.dart';
-import 'package:foodfair/widgets/order_status_babber.dart';
+import 'package:foodfair/widgets/order_status_banner.dart';
 import 'package:intl/intl.dart';
-
 import '../widgets/shipment_address_widget.dart';
 
 class OrderDetailScreen extends StatefulWidget {

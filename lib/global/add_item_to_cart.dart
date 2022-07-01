@@ -23,12 +23,12 @@ separateItemsIdFromUserCartList() {
 }
 
 //here we separate order ids from order collection
-separateItemIDFromOrdersCollection(prouctIds) {
+separatedItemIDFromOrdersCollection(List<dynamic> productIds) {
   List<String> separateItemsIdsList = [];
   List<String> productIdsList = [];
   //here we have itemList
   // getPreviouslySavedItemsList = List<String>.from(prouctIds);
-  productIdsList = List<String>.from(prouctIds);
+  productIdsList = List<String>.from(productIds);
   //productIdsList = prouctIds == null ? [] : List<String>.from(prouctIds);
 
   for (int i = 0; i < productIdsList.length; i++) {

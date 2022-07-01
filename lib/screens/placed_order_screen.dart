@@ -6,10 +6,8 @@ import 'package:foodfair/screens/user_home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:foodfair/providers/order_provider.dart';
 import 'package:foodfair/widgets/container_decoration.dart';
-
 import '../global/color_manager.dart';
 import '../global/global_instance_or_variable.dart';
-
 
 class PlacedOrderScreen extends StatefulWidget {
   //static final String path = "/PlacedOrderScreen";

@@ -49,7 +49,7 @@ class _MyOrderSceenState extends State<MyOrderSceen> {
                     //here we get the productIDs list inside of order collection for a specific user.
                     future: _orderProvider.fetchOrderedItems(snapshot, index),
                     builder: (c, snap) {
-                      // OrderModel orderModel = OrderModel.fromMap(snapshot.data!.docs[index].data() as Map<String, dynamic>);
+                     // OrderModel orderModel = OrderModel.fromMap(snapshot.data!.docs[index].data() as Map<String, dynamic>);
                       return snap.hasData
                           ? MyOrderWidget(
                         //snap.data!.docs.length = how many items(productIDs) is oreder by a specific user
