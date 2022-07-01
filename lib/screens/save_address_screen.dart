@@ -98,6 +98,7 @@ class _SaveAddressScreenState extends State<SaveAddressScreen> {
                 Fluttertoast.showToast(msg: "New Address has been saved.");
                 setState(() {
                    _formKey.currentState!.reset();
+                   Navigator.pop(context);
                 });
                
               });

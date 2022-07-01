@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 SharedPreferences? sPref;
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 String? sellerUIDD;
+String previousSellerId = '';
 final sliderItems = [
   "slider/0.jpg",
   "slider/1.jpg",

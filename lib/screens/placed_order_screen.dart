@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodfair/global/add_item_to_cart.dart';
+import 'package:foodfair/models/order_model.dart';
+import 'package:foodfair/screens/user_home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:foodfair/providers/order.dart';
+import 'package:foodfair/providers/order_provider.dart';
 import 'package:foodfair/widgets/container_decoration.dart';
 
 import '../global/color_manager.dart';
+import '../global/global_instance_or_variable.dart';
 
 
 class PlacedOrderScreen extends StatefulWidget {
@@ -24,83 +29,9 @@ class PlacedOrderScreen extends StatefulWidget {
 }
 
 class _PlacedOrderScreenState extends State<PlacedOrderScreen> {
-  //String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-  //String? sellerUid;
-  //var  addressId = '';
-  //double? tAmount;
-  //String? addressId;
-  /* addOrderDetails() {
-    writeOrderDetailsForUser({
-      "addressID": addressID,
-      "totalAmount": tAmount,
-      "orderBy": sPref!.getString("uid"),
-      "productIDs": sPref!.getStringList("userCart"),
-      "paymentDetails": "Cash on Delivery",
-      "orderTime": orderId,
-      "isSuccess": true,
-      "sellerUID": sellerUid,
-      "riderUID": "",
-      "status": "normal",
-      "orderId": orderId,
-    });
-
-    writeOrderDetailsForSeller({
-      "addressID": addressID,
-      "totalAmount": tAmount,
-      "orderBy": sPref!.getString("uid"),
-      "productIDs": sPref!.getStringList("userCart"),
-      "paymentDetails": "Cash on Delivery",
-      "orderTime": orderId,
-      "isSuccess": true,
-      "sellerUID": sellerUid,
-      "riderUID": "",
-      "status": "normal",
-      "orderId": orderId,
-    }).whenComplete(() {
-      clearCart(context);
-      setState(() {
-        orderId = "";
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const UserHomeScreen()));
-        Fluttertoast.showToast(
-            msg: "Congratulations, Order has been placed successfully.");
-      });
-    });
-  }
-
-   Future writeOrderDetailsForUser(Map<String, dynamic> data) async
-  {
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(sPref!.getString("uid"))
-        .collection("orders")
-        .doc(orderId)
-        .set(data);
-  }
-
-  Future writeOrderDetailsForSeller(Map<String, dynamic> data) async
-  {
-    await FirebaseFirestore.instance
-        .collection("orders")
-        .doc(orderId)
-        .set(data);
-  }*/
-
-  // @override
-  // void initState() {
-  //   // sellerUid = Provider.of<SellerProvider>(context, listen: false).sellerUID;
-  //   // tAmount =
-  //   //     Provider.of<TotalAmountProvider>(context, listen: false).totalAmount;
-  //   addressId = widget.addressID;
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
-    //addressID = ModalRoute.of(context)!.settings.arguments as String;
-    // sellerUid = Provider.of<SellerProvider>(context, listen: false).sellerUID;
-    // tAmount =
-    //     Provider.of<TotalAmountProvider>(context, listen: false).totalAmount;
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -126,18 +57,37 @@ class _PlacedOrderScreenState extends State<PlacedOrderScreen> {
                     ),
                   ),
                   onPressed: () async {
-                    // Consumer<OrderProvider>(
-                    //   builder: (context, addorder, ch) {
-                    //     return addorder.addOrderDetails(addressID, context);
-                    //   },
-                    // );
-                    // String sellerUid = Provider.of<SellerProvider>(context, listen: false)
-                    //     .sellerUID;
-                    // tAmount =
-                    //     Provider.of<TotalAmountProvider>(context, listen: false)
-                    //         .totalAmount;
+                    previousSellerId = '';
+
+                    DateTime timestamp =  DateTime.now();;
+                    String orderId = timestamp.millisecondsSinceEpoch.toString();
+                    final _orderModel = OrderModel(
+                      addressID: widget.addressID,
+                      totalAmount: widget.tAmount,
+                      orderBy: sPref!.getString("uid"),
+                      productIDs: sPref!.getStringList("userCart")!,
+                      paymentDetails:"Cash on Delivery",
+                      orderTime: timestamp.toIso8601String(),
+                      isSuccess: true,
+                      sellerUID: sellerUIDD,
+                      riderUID: "",
+                      status: "normal",
+                      orderId: orderId,
+                    );
+
+                    for(int i = 0; i<_orderModel.productIDs.length; i++){
+                      print("0 + productList = ${_orderModel.productIDs[i]} + AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    }
+
                     await Provider.of<OrderProvider>(context, listen: false)
-                        .addOrderDetails(widget.addressID, context, widget.tAmount);
+                        .addOrder(_orderModel, orderId).then((value){
+                          clearCart(context);
+                          orderId = '';
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => const UserHomeScreen()));
+                          Fluttertoast.showToast(
+                              msg: "Congratulations, Order has been placed successfully.");
+                    });
                   },
                 ),
               ],

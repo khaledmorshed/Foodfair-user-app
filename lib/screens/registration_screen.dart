@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodfair/providers/user_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/user_model.dart';
 import '../widgets/error_dialog.dart';
 import '../widgets/loading_dialog.dart';
 import '../global/color_manager.dart';
@@ -72,37 +76,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     });
   }
 
-  Future uploadProfileImage() async {
-    String? imagePathToString = imagePath.toString();
-    var _splitImagePath = imagePathToString.split("/")[6];
-    UploadTask? uploadTask;
-    try {
-      Reference reference =
-          FirebaseStorage.instance.ref().child('/userImage/${_splitImagePath}');
-      uploadTask = reference.putFile(imagePath);
-    } on FirebaseException catch (error) {
-      setState(() {
-        isLoading = false;
-      });
-      _showErrorDialog(error.code);
-    } catch (error) {
-      setState(() {
-        isLoading = false;
-      });
-      var err =
-          "An unknown error occurrred.\n\nplease check internet connection";
-      _showErrorDialog(err);
-    }
-    //TaskSnapshot snapshot = await uploadTask!;
-    TaskSnapshot snapshot = await uploadTask!.whenComplete(() {});
-    //sellerImageUrl = await snapshot.ref.getDownloadURL();
-    await snapshot.ref.getDownloadURL().then((url) {
-      //sellerImageUrl = url;
-      userImageUrl = url;
-      authenticateUserAndSignUp();
-    });
-    //return sellerImageUrl;
-  }
+
 
   Future<void> _formvalidationAndSave() async {
     if (imageXFile == null) {
@@ -114,73 +88,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             );
           });
     }
-
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
     }
     //_formKey.currentState!.save();
-
     setState(() {
       isLoading = true;
     });
-
     uploadProfileImage();
   }
 
-  Future authenticateUserAndSignUp() async {
-    try {
-      //firebaseAuth = thiis variable from global_instance_or_variable file
-      UserCredential userCredential =
-          await firebaseAuth.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      if (userCredential.user != null) {
-        saveDataToFireStore(userCredential.user!).then((value) {
-          Navigator.pop(context);
-          //send the user to homepage
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => UserHomeScreen()));
-        });
-      }
-    } on FirebaseAuthException catch (error) {
-      setState(() {
-        isLoading = false;
-      });
-      // if (error.code == 'weak-password') {
-      // } else if (error.code == 'email-already-in-use') {}
-      _showErrorDialog(error.message!);
-    } catch (error) {
-      setState(() {
-        isLoading = false;
-      });
-      var errMessage = "Could not authenticate.\nPlease try later.";
-      _showErrorDialog(errMessage);
-    }
-  }
-
-  Future saveDataToFireStore(User currentUser) async {
-    //doc(current.uid) =all the seller information with the unique id.
-    //uid will come from firebase auth(uid = User UID == check there in firebase auth)
-    FirebaseFirestore.instance.collection("users").doc(currentUser.uid).set({
-      "userUID": currentUser.uid,
-      "userEmail": currentUser.email,
-      //trim() = for removing extra space
-      "userName": nameController.text.trim(),
-      "userPhotoUrl": userImageUrl,
-      "userCart" : ['garbageValue'],
-    });
-    //save data locally with sharedPrefernces
-    sPref = await SharedPreferences.getInstance();
-    //here uid and email come from firebase authectication. because if they are authenticate then
-    //all data will store into firbase database
-    await sPref!.setString("uid", currentUser.uid);
-    await sPref!.setString("email", currentUser.email.toString());
-    await sPref!.setString("name", nameController.text.trim());
-    await sPref!.setString("photoUrl", userImageUrl!);
-    await sPref!.setStringList("userCart", ['garbageValue']);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -432,5 +350,91 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ],
           )),
     );
+  }
+
+  Future uploadProfileImage() async {
+    String? imagePathToString = imagePath.toString();
+    var _splitImagePath = imagePathToString.split("/")[6];
+    UploadTask? uploadTask;
+    try {
+      Reference reference =
+      FirebaseStorage.instance.ref().child('/userImage/${_splitImagePath}');
+      uploadTask = reference.putFile(imagePath);
+    } on FirebaseException catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      _showErrorDialog(error.code);
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      var err =
+          "An unknown error occurrred.\n\nplease check internet connection";
+      _showErrorDialog(err);
+    }
+    //TaskSnapshot snapshot = await uploadTask!;
+    TaskSnapshot snapshot = await uploadTask!.whenComplete(() {});
+    //sellerImageUrl = await snapshot.ref.getDownloadURL();
+    await snapshot.ref.getDownloadURL().then((url) {
+      //sellerImageUrl = url;
+      userImageUrl = url;
+      authenticateUserAndSignUp();
+    });
+    //return sellerImageUrl;
+  }
+
+  Future authenticateUserAndSignUp() async {
+    try {
+      //firebaseAuth = thiis variable from global_instance_or_variable file
+      UserCredential userCredential =
+      await firebaseAuth.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      if (userCredential.user != null) {
+        saveDataToFireStore(userCredential.user!).then((value) {
+          Navigator.pop(context);
+          //send the user to homepage
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => UserHomeScreen()));
+        });
+      }
+    } on FirebaseAuthException catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      // if (error.code == 'weak-password') {
+      // } else if (error.code == 'email-already-in-use') {}
+      _showErrorDialog(error.message!);
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      var errMessage = "Could not authenticate.\nPlease try later.";
+      _showErrorDialog(errMessage);
+    }
+  }
+
+  Future saveDataToFireStore(User currentUser) async {
+    final _userModel = UserModel(
+      userUID: currentUser.uid,
+      userEmail: currentUser.email,
+      userName: nameController.text.trim(),
+      userPhotoUrl: userImageUrl,
+      userCart: ['garbageValue'],
+    );
+    await Provider.of<UserProvider>(context, listen: false).addUser(_userModel, currentUser.uid);
+   // final shData = jsonEncode(_userModel);
+    //save data locally with sharedPrefernces
+    sPref = await SharedPreferences.getInstance();
+    //here uid and email come from firebase authectication. because if they are authenticate then
+    //all data will store into firbase database
+    await sPref!.setString("uid", currentUser.uid);
+    await sPref!.setString("email", currentUser.email.toString());
+    await sPref!.setString("name", nameController.text.trim());
+    await sPref!.setString("photoUrl", userImageUrl!);
+    await sPref!.setStringList("userCart", ['garbageValue']);
+    //await sPref!.setString("userModel", shData);
   }
 }

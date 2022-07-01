@@ -42,8 +42,11 @@ separateItemIDFromOrdersCollection(prouctIds) {
   return separateItemsIdsList;
 }
 
-addItemToCart(String? foodItemId, BuildContext context, int itemCounter) {
+addItemToCart(String? foodItemId, BuildContext context, int itemCounter, String currentSellerId) {
+  //when item will be added in cart on that time currentSellerId will be assign in to previousSellerId
+  previousSellerId = currentSellerId;
   List<String>? tempCartList = sPref!.getStringList("userCart");
+
   tempCartList!.add(foodItemId! + ":$itemCounter");
   FirebaseFirestore.instance
       .collection("users")
@@ -103,6 +106,9 @@ separateItemQuantityFromOrdersCollection(prouctIds) {
 }
 
 clearCart(context) {
+  //it is for you can not add to card multiple seller at a time..and after
+  //clear card and order it will empty string
+  previousSellerId = '';
   //so now cart has only one value in 0the index which value is garbageValue
   sPref!.setStringList("userCart", ['garbageValue']);
   //now get that only one value inside of emptyList

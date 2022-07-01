@@ -57,6 +57,7 @@ class _MyOrderSceenState extends State<MyOrderSceen> {
                                      */
                                     (snapshot.data!.docs[index].data()!
                                         as Map<String, dynamic>)["productIDs"]))
+                        // this is unnecessary just order by..
                             .where("orderBy",
                                 /*orderBy = a specific user*/ whereIn:
                                     (snapshot.data!.docs[index].data()!

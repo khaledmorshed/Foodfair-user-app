@@ -16,8 +16,8 @@ class UserModel{
       "userEmail": userEmail,
       "userName": userName,
       "userPhotoUrl": userPhotoUrl,
-      // "userCart" : ['garbageValue'],
-      "userCart" : List<String>.from(userCart.map((x) => x)),
+       "userCart" : ['garbageValue'],
+      //"userCart" : List<String>.from(userCart.map((x) => x)),
     };
     return map;
   }
