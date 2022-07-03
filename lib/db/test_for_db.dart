@@ -11,13 +11,13 @@ class DbHelper {
 
   //fetch all sellers
   static Future<Stream<QuerySnapshot<Map<String, dynamic>>>>?
-      fetchAllSellers() async {
+  fetchAllSellers() async {
     Stream<QuerySnapshot<Map<String, dynamic>>>? queryData;
     try {
       queryData = _db
           .collection(
-            "sellers",
-          )
+        "sellers",
+      )
           .snapshots();
       return queryData;
     } catch (error) {
@@ -27,7 +27,7 @@ class DbHelper {
 
   //fetch a specific seller menu with once's id
   static Future<Stream<QuerySnapshot<Map<String, dynamic>>>>
-      fetchSpecificSellerMenus(String sellerID) async {
+  fetchSpecificSellerMenus(String sellerID) async {
     Stream<QuerySnapshot<Map<String, dynamic>>>? queryData;
     try {
       queryData = _db
@@ -44,7 +44,7 @@ class DbHelper {
 
   // fetch a specific seller items with id
   static Future<Stream<QuerySnapshot<Map<String, dynamic>>>>
-      fetchSpecificSellerItems(String sellerID, String menuID) async {
+  fetchSpecificSellerItems(String sellerID, String menuID) async {
     Stream<QuerySnapshot<Map<String, dynamic>>>? queryData;
     try {
       queryData = _db
@@ -84,7 +84,7 @@ class DbHelper {
 
   //fetch specific user's orders
   static Future<Stream<QuerySnapshot<Map<String, dynamic>>>>?
-      fetchOrders() async {
+  fetchOrders() async {
     Stream<QuerySnapshot<Map<String, dynamic>>>? queryData;
     try {
       //here we get the order list of order collection which are normal
@@ -102,19 +102,31 @@ class DbHelper {
   }
 
   //fetch items those are ordered from a specific user
-  static Future<QuerySnapshot<Map<String, dynamic>>> fetchOrderedItems(OrderModel orderModel) async {
+  static Future<QuerySnapshot<Map<String, dynamic>>> fetchOrderedItems(
+      AsyncSnapshot<QuerySnapshot<Object?>> snapshot, int index) async {
     QuerySnapshot<Map<String, dynamic>> queryData;
     try {
       queryData = await _db
           .collection(
-              "items") /*insdie of items colleciton we will search which items are ordered.*/
+          "items") /*insdie of items colleciton we will search which items are ordered.*/
           .where("itemID",
-              /*if itemID is exist in separateOrdersItemsIDs*/
-              whereIn: separatedItemIDFromOrdersCollection(orderModel.productIDs))
+          /*if itemID is exist in separateOrdersItemsIDs*/
+          whereIn: separatedItemIDFromOrdersCollection(
+            /*snapshot.data.docs[index].data() == it gives only one order id.
+                                     And inside of a specific order id we get productID list(name as productIDs)
+                                     productIDs = here we have itemID and item quantiy.so separateItemIDFromOrdersCollection()
+                                      by this fuction we will extract just itemID
+                                     */
+              (snapshot.data!.docs[index].data()!
+              as Map<String, dynamic>)["productIDs"]))
+      // this is unnecessary just order by..
+          .where("orderBy",
+          /*orderBy = a specific user*/ whereIn: (snapshot.data!.docs[index]
+              .data()! as Map<String, dynamic>)["uid"])
           .orderBy("publishedDate", descending: true)
           . /*instead of snapshot() we use here get(), the reason
                              for using FutureBuilder*/
-          get();
+      get();
       return queryData;
     } catch (error) {
       throw "error";

@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../global/color_manager.dart';
-import '../models/items.dart';
+import '../models/items_model.dart';
 import '../screens/user_items_details_screen.dart';
 import 'loading_container.dart';
 
 class ItemsWidget extends StatefulWidget {
-  Items? itemModel;
+  ItemModel? itemModel;
   BuildContext? context;
   bool? netValue;
   String? sellerUID;

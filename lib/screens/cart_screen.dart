@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodfair/widgets/progress_bar.dart';
-import 'package:foodfair/models/items.dart';
+import 'package:foodfair/models/items_model.dart';
 import 'package:foodfair/providers/total_amount.dart';
 import 'package:foodfair/widgets/cart_widget.dart';
 import 'package:foodfair/widgets/text_widget_header.dart';
@@ -97,7 +97,7 @@ class _CartScreenState extends State<CartScreen> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                  Items itemModel = Items.fromJson(
+                  ItemModel itemModel = ItemModel.fromJson(
                     snapshot.data!.docs[index].data()
                     as Map<String, dynamic>,
                   );

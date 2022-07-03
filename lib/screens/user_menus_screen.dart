@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../global/global_instance_or_variable.dart';
-import '../models/menus.dart';
+import '../models/menus_model.dart';
 import '../models/sellers_model.dart';
 import '../providers/sellers_provider.dart';
 import '../widgets/container_decoration.dart';
@@ -81,7 +81,7 @@ class _UserMenusScreenState extends State<UserMenusScreen> {
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          Menus menuModel = Menus.fromJson(
+                          MenusModel menuModel = MenusModel.fromJson(
                               snapshot.data!.docs[index].data()
                                   as Map<String, dynamic>);
                           return MenusWidget(

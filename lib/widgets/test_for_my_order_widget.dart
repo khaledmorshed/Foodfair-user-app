@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:foodfair/models/items.dart';
+import 'package:foodfair/models/items_model.dart';
 import '../screens/order_detail_screen.dart';
 
 class MyOrderWidget extends StatelessWidget {
@@ -35,8 +35,8 @@ class MyOrderWidget extends StatelessWidget {
             itemCount: itemCount,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              Items itemModel =
-              Items.fromJson(data![index].data()! as Map<String, dynamic>);
+              ItemModel itemModel =
+              ItemModel.fromJson(data![index].data()! as Map<String, dynamic>);
               return PlacedOrderDesignWidtet(
                   itemModel, context, separateItemsQuantityList![index]);
             }),
@@ -46,7 +46,7 @@ class MyOrderWidget extends StatelessWidget {
 }
 
 Widget PlacedOrderDesignWidtet(
-    Items itemModel, BuildContext context, separateItemsQuantityList) {
+    ItemModel itemModel, BuildContext context, separateItemsQuantityList) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 120,

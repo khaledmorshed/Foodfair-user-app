@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:foodfair/models/items.dart';
-import 'package:foodfair/models/menus.dart';
+import 'package:foodfair/models/items_model.dart';
+import 'package:foodfair/models/menus_model.dart';
 import 'package:foodfair/widgets/items_widget.dart';
 import 'package:provider/provider.dart';
 import '../providers/sellers_provider.dart';
@@ -11,7 +11,7 @@ import '../widgets/my_appbar.dart';
 import '../widgets/text_widget_header.dart';
 
 class UserItemsScreen extends StatefulWidget {
-  final Menus? model;
+  final MenusModel? model;
   String? sellerUID;
 
   UserItemsScreen({
@@ -76,7 +76,7 @@ class _UserItemsScreenState extends State<UserItemsScreen> {
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          Items itemModel = Items.fromJson(
+                          ItemModel itemModel = ItemModel.fromJson(
                               snapshot.data!.docs[index].data()
                                   as Map<String, dynamic>);
                           return ItemsWidget(

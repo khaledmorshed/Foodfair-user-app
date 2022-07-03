@@ -45,7 +45,7 @@ class OrderModel{
     addressID: map['addressID'],
     totalAmount: map['totalAmount'],
     orderBy: map['orderBy'],
-    productIDs: List<String>.from(map["userCart"].map((x) => x)),
+    productIDs: List<String>.from(map["productIDs"].map((x) => x)),
     paymentDetails: map['paymentDetails'],
     orderTime: map['orderTime'],
     isSuccess: map['isSuccess'],

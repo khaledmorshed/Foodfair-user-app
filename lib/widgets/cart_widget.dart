@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodfair/models/items.dart';
+import 'package:foodfair/models/items_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class CartWidget extends StatefulWidget {
-  final Items? itemModel;
+  final ItemModel? itemModel;
   final BuildContext? context;
   final int? quantityNumber;
   final double? total;

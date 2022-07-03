@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodfair/global/global_instance_or_variable.dart';
 import 'package:foodfair/widgets/simple_appbar.dart';
 
-import '../models/address.dart';
+import '../models/address_model.dart';
 import '../widgets/my_text_field.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
@@ -77,7 +77,7 @@ class _SaveAddressScreenState extends State<SaveAddressScreen> {
         child: FloatingActionButton.extended(
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              final addressModel = Address(
+              final addressModel = AddressModel(
                 name: _name.text.trim(),
                 state: _state.text.trim(),
                 fullAddress: _completeAddress.text.trim(),

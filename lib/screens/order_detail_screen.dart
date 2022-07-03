@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodfair/widgets/progress_bar.dart';
 import 'package:foodfair/global/global_instance_or_variable.dart';
-import 'package:foodfair/models/address.dart';
+import 'package:foodfair/models/address_model.dart';
 import 'package:foodfair/widgets/order_status_banner.dart';
 import 'package:intl/intl.dart';
 import '../widgets/shipment_address_widget.dart';
@@ -103,7 +103,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           builder: (c, snapshot) {
                             return snapshot.hasData
                                 ? ShipmentAddressWidget(
-                                    addressModel: Address.fromJson(
+                                    addressModel: AddressModel.fromJson(
                                         snapshot.data!.data()!
                                             as Map<String, dynamic>),
                                   )

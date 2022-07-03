@@ -220,7 +220,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
            initialPage: 0,
            enableInfiniteScroll: true,
            reverse: false,
-           autoPlay: true,
+           //autoPlay: true,
            autoPlayInterval: const Duration(seconds: 2),
            autoPlayAnimationDuration:
            const Duration(milliseconds: 500),

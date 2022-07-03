@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Items {
+class ItemModel {
   String? menuID;
   String? itemID;
   String? sellerUID;
@@ -12,7 +12,7 @@ class Items {
   String? status;
   String? itemImageUrl;
 
-  Items({
+  ItemModel({
     this.menuID,
     this.itemID,
     this.sellerUID,
@@ -25,7 +25,7 @@ class Items {
     this.itemImageUrl,
   });
 
-  Items.fromJson(Map<String, dynamic> json) {
+  ItemModel.fromJson(Map<String, dynamic> json) {
     menuID = json['menuID'];
     itemID = json['itemID'];
     sellerUID = json['sellerUID'];

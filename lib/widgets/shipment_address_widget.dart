@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foodfair/screens/user_home_screen.dart';
-import 'package:foodfair/models/address.dart';
+import 'package:foodfair/models/address_model.dart';
 import '../global/color_manager.dart';
 
 class ShipmentAddressWidget extends StatelessWidget {
-  final Address? addressModel;
+  final AddressModel? addressModel;
 
   ShipmentAddressWidget({this.addressModel});
 

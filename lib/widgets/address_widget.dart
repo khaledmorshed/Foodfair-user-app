@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodfair/models/address.dart';
+import 'package:foodfair/models/address_model.dart';
 import 'package:foodfair/providers/address.dart';
 import 'package:provider/provider.dart';
 import '../global/color_manager.dart';
@@ -7,7 +7,7 @@ import '../global/map.dart';
 import '../screens/placed_order_screen.dart';
 
 class AddressWidget extends StatefulWidget {
-  final Address? addressModel;
+  final AddressModel? addressModel;
   final int? currentAddressIndex;
   final int? value;
   final String? addressID;

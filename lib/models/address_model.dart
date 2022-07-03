@@ -1,4 +1,4 @@
-class Address
+class AddressModel
 {
   String? name;
   String? phoneNumber;
@@ -9,7 +9,7 @@ class Address
   double? latitude;
   double? longitude;
 
-  Address({
+  AddressModel({
     this.name,
     this.phoneNumber,
     this.flatNumber,
@@ -20,7 +20,7 @@ class Address
     this.longitude,
   });
 
-  Address.fromJson(Map<String, dynamic> json)
+  AddressModel.fromJson(Map<String, dynamic> json)
   {
     name = json['name'];
     phoneNumber = json['phoneNumber'];

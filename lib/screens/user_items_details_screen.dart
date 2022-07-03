@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:number_inc_dec/number_inc_dec.dart';
 
-import 'package:foodfair/models/items.dart';
+import 'package:foodfair/models/items_model.dart';
 import 'package:foodfair/widgets/my_appbar.dart';
 
 import '../global/add_item_to_cart.dart';
@@ -11,7 +11,7 @@ import '../global/global_instance_or_variable.dart';
 import '../widgets/loading_container.dart';
 
 class UserItemsDetailsScreen extends StatefulWidget {
-  final Items? itemModel;
+  final ItemModel? itemModel;
   String? sellerUID;
   UserItemsDetailsScreen({
     Key? key,

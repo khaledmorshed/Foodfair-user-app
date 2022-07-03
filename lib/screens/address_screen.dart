@@ -6,7 +6,7 @@ import 'package:foodfair/widgets/address_widget.dart';
 import 'package:foodfair/widgets/simple_appbar.dart';
 import 'package:provider/provider.dart';
 import '../global/global_instance_or_variable.dart';
-import '../models/address.dart';
+import '../models/address_model.dart';
 import '../providers/total_amount.dart';
 import 'save_address_screen.dart';
 
@@ -76,7 +76,7 @@ class _AddressScreenState extends State<AddressScreen> {
                               itemCount: snapshot.data!.docs.length,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                Address? addressModel = Address.fromJson(
+                                AddressModel? addressModel = AddressModel.fromJson(
                                   snapshot.data!.docs[index].data()!
                                       as Map<String, dynamic>,
                                 );

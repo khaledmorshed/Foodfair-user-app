@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../global/color_manager.dart';
-import '../models/menus.dart';
+import '../models/menus_model.dart';
 import '../screens/user_items_screen.dart';
 import 'loading_container.dart';
 
 class MenusWidget extends StatefulWidget {
-  Menus? model;
+  MenusModel? model;
   BuildContext? context;
   String? sellerUID;
   bool? netValue;
